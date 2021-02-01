@@ -1,9 +1,18 @@
-import {initializeBlock} from '@airtable/blocks/ui';
+import { initializeBlock, useBase, useRecords } from '@airtable/blocks/ui';
 import React from 'react';
 
+import AddFormRow from "./AddRowForm";
+
 function HelloWorldTypescriptApp() {
-    // YOUR CODE GOES HERE
-    return <div>Hello world 🚀</div>;
+    const base = useBase();
+    const records = useRecords(base.getTableByName("todo"))
+
+    return <>
+        <ul>
+            {records.map(r => (<li key={r.id}>{r.name}</li>))}
+        </ul>
+        <AddFormRow tableName="todo" />
+    </>;
 }
 
 initializeBlock(() => <HelloWorldTypescriptApp />);
